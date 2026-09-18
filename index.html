@@ -341,7 +341,7 @@ const LS_KEY = "erth_invoice_ledger_v1";
    2) من القايمة: Extensions > Apps Script، والصقي كود Apps Script اللي بعتّه لك، واعملي Deploy كـ Web App.
    3) انسخي رابط الـ Web App الناتج وحطّيه هنا مكان الرابط بتاع placeholder تحت.
    ================================================= */
-const GOOGLE_SHEET_WEBHOOK_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+const GOOGLE_SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxbLyTVHcrQhBdbgKyFNiAg2YnYJ9hGNzysSi2M2QubPOKl0wj_AY49V0Q3cmbYKOT_/exec";
 
 function syncRowToGoogleSheet(row){
   if(!GOOGLE_SHEET_WEBHOOK_URL || GOOGLE_SHEET_WEBHOOK_URL.indexOf('PASTE_YOUR') === 0){
@@ -742,7 +742,7 @@ function printInvoice(idx){
 
 function exportLedgerExcel(){
   const rows = loadLedger();
-  if(rows.length === 0){ showToast('السجل فاضي لسه'); return; }
+  if(rows.length === 0){ showToast('السجل فارغ'); return; }
   const data = rows.map(r => ({
     'تاريخ الحفظ': r.savedAt, 'رقم الفاتورة': r.invNumber, 'العميل': r.client,
     'النوع': r.type, 'المبلغ': r.amount, 'التفاصيل': r.details || '-', 'الرصيد المتبقي': r.balance
@@ -755,7 +755,7 @@ function exportLedgerExcel(){
 }
 
 function newInvoice(){
-  if(!confirm('تفريغ النموذج لفاتورة جديدة؟ (السجل هيفضل محفوظ)')) return;
+  if(!confirm('تفريغ النموذج لفاتورة جديدة؟ (السجل يبقى محفوظ)')) return;
   document.getElementById('inv-type').value = 'receivable';
   applyInvoiceType();
   document.getElementById('items-body').innerHTML = '';
